@@ -16,12 +16,14 @@ import { FC } from 'react';
 interface GithubRepoTableProps {
   data: any;
   page: number;
-  onChangePage: (page: number) => void;
+  isLoading?: boolean;
+  onPageChange: (page: number) => void;
 }
 const GithubRepoTable: FC<GithubRepoTableProps> = ({
   data,
+  isLoading,
   page,
-  onChangePage,
+  onPageChange,
 }) => {
   return (
     <Paper sx={{ width: '100%', mb: 2 }}>
@@ -37,7 +39,7 @@ const GithubRepoTable: FC<GithubRepoTableProps> = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.items.map((row) => (
+            {data.items[page - 1].map((row) => (
               <TableRow
                 key={row.name}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -62,11 +64,14 @@ const GithubRepoTable: FC<GithubRepoTableProps> = ({
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[10]}
-        component="div"
         count={data.total_count}
         rowsPerPage={10}
-        page={page}
-        onPageChange={(_, page) => console.log(page)}
+        page={page - 1}
+        backIconButtonProps={isLoading ? { disabled: true } : undefined}
+        nextIconButtonProps={isLoading ? { disabled: true } : undefined}
+        onPageChange={(_, page) => {
+          onPageChange(page + 1);
+        }}
       />
     </Paper>
   );

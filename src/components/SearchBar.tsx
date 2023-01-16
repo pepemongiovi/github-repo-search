@@ -30,15 +30,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 interface SearchBarProps {
-  onSearch: (search: string, page: number) => void;
-  page: number;
+  onSearch: (page: number, search: string) => void;
+  isLoading?: boolean;
 }
-const SearchBar: FC<SearchBarProps> = ({ onSearch, page }) => {
+const SearchBar: FC<SearchBarProps> = ({ onSearch, isLoading }) => {
   const [search, setSearch] = useState('');
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSearch(search, page);
+    onSearch(1, search);
   };
 
   return (
@@ -55,7 +55,12 @@ const SearchBar: FC<SearchBarProps> = ({ onSearch, page }) => {
           </Search>
         </Card>
 
-        <Button type="submit" variant="contained" sx={{ px: 4 }}>
+        <Button
+          type="submit"
+          variant="contained"
+          sx={{ px: 4 }}
+          //   disabled={isLoading}
+        >
           <SearchIcon sx={{ mr: 1 }} />
           Search
         </Button>
