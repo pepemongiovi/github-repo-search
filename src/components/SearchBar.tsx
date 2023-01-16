@@ -1,6 +1,7 @@
-import { alpha, Button, Card, InputBase, Stack, styled } from '@mui/material';
+import { alpha, Card, InputBase, Stack, styled } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import { FC, FormEventHandler, useState } from 'react';
+import { FC, useState } from 'react';
+import { LoadingButton } from '@mui/lab';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -55,15 +56,15 @@ const SearchBar: FC<SearchBarProps> = ({ onSearch, isLoading }) => {
           </Search>
         </Card>
 
-        <Button
+        <LoadingButton
           type="submit"
           variant="contained"
           sx={{ px: 4 }}
-          //   disabled={isLoading}
+          loading={isLoading}
         >
           <SearchIcon sx={{ mr: 1 }} />
           Search
-        </Button>
+        </LoadingButton>
       </Stack>
     </form>
   );
