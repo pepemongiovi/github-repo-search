@@ -5,7 +5,8 @@ import { Stack, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 const GithubRepoSearch = () => {
-  const { repos, isLoading, fetchRepos } = useGithubRepoFetch();
+  const { repos, isLoading, fetchRepos, viewRepoDetails } =
+    useGithubRepoFetch();
   const [page, setPage] = useState(1);
 
   const onSearchRepo = (page: number, search: string) => {
@@ -25,6 +26,7 @@ const GithubRepoSearch = () => {
         <GithubRepoTable
           page={page}
           onPageChange={onPageChange}
+          viewRepoDetails={viewRepoDetails}
           data={repos}
           isLoading={isLoading}
         />

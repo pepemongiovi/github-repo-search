@@ -1,3 +1,4 @@
+import { GithubRepoItem } from '@/hooks/useGithubRepoFetch';
 import {
   Button,
   Link,
@@ -18,12 +19,14 @@ interface GithubRepoTableProps {
   page: number;
   isLoading?: boolean;
   onPageChange: (page: number) => void;
+  viewRepoDetails: (repo: GithubRepoItem) => void;
 }
 const GithubRepoTable: FC<GithubRepoTableProps> = ({
   data,
   isLoading,
   page,
   onPageChange,
+  viewRepoDetails,
 }) => {
   return (
     <Paper sx={{ width: '100%', mb: 2 }}>
@@ -38,32 +41,35 @@ const GithubRepoTable: FC<GithubRepoTableProps> = ({
               <TableCell align="center">Details</TableCell>
             </TableRow>
           </TableHead>
+
           <TableBody>
-            {data.items[page - 1].map((row) => (
+            {data.items[page - 1].map((repo: GithubRepoItem) => (
               <TableRow
-                key={row.name}
+                key={repo.name}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {row.name}
+                  {repo.name}
                 </TableCell>
-                <TableCell align="center">{row.owner.login}</TableCell>
-                <TableCell align="center">{row.stargazers_count}</TableCell>
+                <TableCell align="center">{repo.owner.login}</TableCell>
+                <TableCell align="center">{repo.stargazers_count}</TableCell>
                 <TableCell align="center">
-                  <Link target="_blank" href={row.html_url}>
-                    {row.full_name}
+                  <Link target="_blank" href={repo.html_url}>
+                    {repo.full_name}
                   </Link>
                 </TableCell>
                 <TableCell align="center">
-                  <Button>View</Button>
+                  <Button onClick={() => viewRepoDetails(repo)}>View</Button>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+
       <TablePagination
         rowsPerPageOptions={[10]}
+        component="div"
         count={data.total_count}
         rowsPerPage={10}
         page={page - 1}
