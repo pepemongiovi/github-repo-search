@@ -1,4 +1,4 @@
-import { fetchGithubAPI } from '@/services/github-api';
+import fetchGithubAPI from '@/services/github-api';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
@@ -22,7 +22,7 @@ interface GithubRepoResult {
 }
 const useGithubRepoFetch = () => {
   const [search, setSearch] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [repos, setRepos] = useState<GithubRepoResult>({
     total_count: 0,
@@ -30,7 +30,11 @@ const useGithubRepoFetch = () => {
   });
 
   const fetchRepos = async (page: number, repoName = search) => {
-    if (!search || repoName !== search || repos.items.length < page) {
+    if (
+      !search.trim() ||
+      repoName !== search.trim() ||
+      repos.items.length < page
+    ) {
       setIsLoading(true);
 
       try {

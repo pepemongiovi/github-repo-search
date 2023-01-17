@@ -3,7 +3,6 @@ import {
   Button,
   Link,
   Paper,
-  Stack,
   Table,
   TableBody,
   TableCell,
@@ -29,7 +28,7 @@ const GithubRepoTable: FC<GithubRepoTableProps> = ({
   viewRepoDetails,
 }) => {
   return (
-    <Paper sx={{ width: '100%', mb: 2 }}>
+    <Paper data-testid="repos-table" sx={{ width: '100%', mb: 2 }}>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -59,7 +58,9 @@ const GithubRepoTable: FC<GithubRepoTableProps> = ({
                   </Link>
                 </TableCell>
                 <TableCell align="center">
-                  <Button onClick={() => viewRepoDetails(repo)}>View</Button>
+                  <Button onClick={() => viewRepoDetails(repo)}>
+                    View details
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}

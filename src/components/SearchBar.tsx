@@ -1,7 +1,16 @@
-import { alpha, Card, InputBase, Stack, styled } from '@mui/material';
+import {
+  alpha,
+  Button,
+  Card,
+  CircularProgress,
+  InputBase,
+  Stack,
+  styled,
+} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { FC, useState } from 'react';
 import { LoadingButton } from '@mui/lab';
+import { toast } from 'react-toastify';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -39,7 +48,9 @@ const SearchBar: FC<SearchBarProps> = ({ onSearch, isLoading }) => {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSearch(1, search);
+
+    if (search) onSearch(1, search);
+    else toast.warn('Please enter a repository name');
   };
 
   return (
@@ -57,6 +68,7 @@ const SearchBar: FC<SearchBarProps> = ({ onSearch, isLoading }) => {
         </Card>
 
         <LoadingButton
+          data-testid="search-btn"
           type="submit"
           variant="contained"
           sx={{ px: 4 }}
